@@ -24,6 +24,11 @@ echo "[ERROR]$@"
 
 function init() {
 
+    cd /
+    if [ ! -d "$LEAF_DIR" ]; 
+	then
+	mkdir "$LEAF_DIR"
+    fi
 
     cd "$BASE"
     if [ -e "$GITPRIVATE" ] || [ -e "GITPUBLIC" ];
