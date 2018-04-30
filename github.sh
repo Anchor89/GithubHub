@@ -5,7 +5,7 @@ echo "USAGE: "
 echo "$CMD init"
 echo "$CMD push|pull repo_name"
 echo ""
-echo "$CMD init: Create git.private.pem and git.public.pem under ~/keys. Then create leaf directory under this direcotry and git-clone root from Github."
+echo "$CMD init: Create git.private.pem and git.public.pem under $KEYDIR. Then create leaf directory under this direcotry and git-clone root from Github."
 echo "NOTE: A Github repo called root should be created on github.com beforehand."
 echo ""
 echo "$CMD push repo_name: Make directory repo_name under leaf/ to an compressed archived file into root/ with the same name."
@@ -31,7 +31,7 @@ function init() {
     fi
 
     cd "$BASE"
-    if [ -e "$GITPRIVATE" ] || [ -e "GITPUBLIC" ];
+    if [ -e "$GITPRIVATE" ] || [ -e "$GITPUBLIC" ];
 	then 
 	error "Pem files exits with the same name. Exit."
 	exit 1
@@ -49,7 +49,7 @@ function push() {
     fi
 
     cd /
-    info "Push $aLEAFREPO to Github"
+    info "Push $LEAFREPO to Github"
     info "Remove $REPO under $ROOT_DIR/"
     rm -f "$ROOTREPO"
     info "Encrypt $REPO from $LEAF_DIR to $ROOT_DIR"
@@ -85,6 +85,7 @@ function pull() {
 
 BASE="$(cd `dirname $0`; pwd)"
 info "BASE=$BASE"
+KEYDIR="~/keys"
 CMD="$(basename $0)"
 ACTION="$1"
 ROOT_DIR="$BASE/root"
